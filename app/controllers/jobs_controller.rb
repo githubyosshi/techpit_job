@@ -4,6 +4,8 @@ class JobsController < ApplicationController
   before_action :authenticate_user!, except: :show
 
   def index
+    @jobs = Job.all.includes(:user).where(use_id: current_user.id) #user_idがcurrent_user.idのjobを取得
+    @entries = Entry.all.includes(:user,:job) # Entryを取得
   end
   #Jobオブジェクトを作成して@jobに代入
   def new
@@ -71,6 +73,7 @@ class JobsController < ApplicationController
   #paramsとして送信されたidのレコードをfindメソッドで取得し@jobに代入
   def show
     @job = Job.find(params[:id])
+    @entries = Entry.where(job_id:@job) # entriesテーブルからjob_idが@jobと同じものを取得
   end
 
   private
