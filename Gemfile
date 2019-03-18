@@ -7,7 +7,7 @@ ruby '2.3.1'
 gem 'rails', '~> 5.2.2'
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3'
-gem 'sqlite3', '~>1.3.6'
+gem 'sqlite3', '~>1.3.6', group: :development # group::development記述追加
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
@@ -67,3 +67,5 @@ gem 'devise'
 gem 'bootstrap', '~> 4.1.3'
 gem 'jquery-rails'
 gem 'rmagick'
+
+gem 'pg', group: :production # Heroku用に追加
