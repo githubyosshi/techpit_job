@@ -5,11 +5,65 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <!-- ogp画像挿入 -->
+      <%= yield :ogp %>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+
+    </head>
 
   <body>
+
+    <nav class="navbar navbar-expand-lg bg-2 navbar-light header">
+      <div class="container">
+        <a class="navbar-brand" href="/jobs">Techpit Job</a>
+        <% if user_signed_in? %>
+        <div class="my-2 my-lg-0">
+          <!-- =====link_toメソッドを使ってログアウト用のリンクを用意==== -->
+          <%= link_to 'ログアウト', destroy_user_session_path, class: "no-text-decoration", method: :delete %>
+        </div>
+        <% end %>
+      </div>
+    </nav>
+
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
     <%= yield %>
+      <script>
+        //url-texを現在のURL（document.URL）に変更する
+        $('.url-text').text(document.URL);
+
+        //clipURL関数の定義（urlをコピーする機能）
+        function clipURL() {
+          //コピー用のtextareaを作成
+          $('body').append('<textarea id="currentURL" style="position:fixed;left:-100%;">'+location.href+'</textarea>');
+
+          //currentURLのIDを選択
+          $('#currentURL').select();
+
+          //選択しているテキストをクリップボードにコピーする
+          document.execCommand('copy');
+
+          //現在のcurrentURLのIDを削除
+          $('#currentURL').remove();
+
+          //アラートを表示する
+          alert("URLをコピーしました。");
+        }
+
+        //textにcard-titleクラスのテキストを代入する
+        var text = $('.card-title').text();
+
+        //twitterurlのシェア用urlを作成してtwitterurlに挿入
+        var twitterurl = "https://twitter.com/intent/tweet?url=" + document.URL + "&text=" + text + "&hashtags=#テックピット";
+
+        //btn-twクラスのリンクをtwitterurlに変更する
+        $('.btn-tw').attr('href',twitterurl);
+      </script>
   </body>
 </html>
