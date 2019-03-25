@@ -4,7 +4,7 @@ class JobsController < ApplicationController
   before_action :authenticate_user!, except: :show
 
   def index
-    @jobs = Job.all.includes(:user).where(use_id: current_user.id) #user_idがcurrent_user.idのjobを取得
+    @jobs = Job.all.includes(:user).where(user_id: current_user.id) #user_idがcurrent_user.idのjobを取得
     @entries = Entry.all.includes(:user,:job) # Entryを取得
   end
   #Jobオブジェクトを作成して@jobに代入
